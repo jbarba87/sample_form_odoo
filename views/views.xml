@@ -13,6 +13,31 @@
       </tree>
     </field>
   </record>
+
+  <record model="ir.ui.view" id="cabana_tree">
+    <field name="name">Cabaña</field>
+    <field name="model">coop1.cabana</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="comunidad"/>
+        <field name="distrito_cab"/>
+        <field name="provincia_cab"/>
+        <field name="departamento_cab"/>
+      </tree>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="parcela_tree">
+    <field name="name">Parcela</field>
+    <field name="model">coop1.parcela</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="area"/>
+        <field name="num_potreros"/>
+      </tree>
+    </field>
+  </record>
+  
   
   <record model="ir.ui.view" id="socio_form">
     <field name="name">Socios</field>
@@ -26,30 +51,53 @@
               <field name="dni"/>
               <field name="fecha_nac"/>
               <field name="edad"/>
-
             </group>
             <group>
               <field name="sexo"/>
               <field name="lugar_nacimiento"/>
+              <field name="estado_civil"/>
             </group>
-          
           </group>
           <notebook>
-            <page string="Nacimiento">
+            <page string="Domicilio">
               <group>
                 <group>
-                  <field name="estado_civil"/>
+                  <field name="dom_permanente"/>
+                  <field name="dom_transitorio"/>
+                  <field name="personas_nucleo"/>
                 </group>
               </group>
-
+            </page>
+            <page string="Rebaño/Cabaña">
             </page>
           </notebook>
-          
         </sheet>
       </form>
     </field>
   </record>
-  
+
+
+  <record model="ir.ui.view" id="cabana_form">
+    <field name="name">Cabaña</field>
+    <field name="model">coop1.cabana</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <group>
+              <field name="comunidad"/>
+              <field name="distrito_cab"/>
+              <field name="provincia_cab"/>
+              <field name="departamento_cab"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+
+
     <!-- explicit list view definition -->
     <!--
     <record model="ir.ui.view" id="coop1.list">

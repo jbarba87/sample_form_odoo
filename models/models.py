@@ -23,6 +23,14 @@ class socio(models.Model):
       if  (not rec.dni.isnumeric()):
         raise ValidationError('El campo DNI no debe contener letras.')
 
+
+  @api.constrains('personas_nucleo')
+  def check_personas_nucleo(self):
+    if self.personas_nucleo is not False:
+      if self.personas_nucleo < 0 or self.personas_nucleo > 25:
+        raise ValidationError('En el campo Nº de nucleo familiar ingrese un valor entre 0 y 25.')
+
+
   # Funcion de autocompletado de la edad en base a la fecha de nacimiento
   # Ojo que la el campo odoo.fields.Date es string por lo que debe convertir en datetime
   # Tener en cuenta que se debe ingresar la fecha en formato mm/dd/aaaa
@@ -55,14 +63,40 @@ class socio(models.Model):
     ('divorciado', 'Divorciado'),
   ], default="soltero", string="Estado Civil")
 
-# class coop1(models.Model):
-#     _name = 'coop1.coop1'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         self.value2 = float(self.value) / 100
+  #Domicilio
+  dom_permanente = fields.Char(size=30)
+  dom_transitorio = fields.Char(size=30)
+  personas_nucleo = fields.Integer(string="Nº de nucleo familiar ")
+
+
+
+class cabana(models.Model):
+  _name = "coop1.cabana"
+  _description = "Cabaña del socio"
+  
+  comunidad = fields.Char(string = "Comunidad/Asociacion")
+  
+  distrito_cab = fields.Char(string = "Distrito")
+  provincia_cab = fields.Char(string = "Provincia")
+  departamento_cab = fields.Char(string = "Departamento")
+  
+  
+class parcela(models.Model):
+  _name = "coop1.parcela"
+  _description = "Parcela de la cabaña"
+  
+  area = fields.Float(string="Area")
+  num_potreros = fields.Integer(string = "Nº potreros")
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
