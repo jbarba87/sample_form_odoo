@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 class socio(models.Model):
   _name = "coop1.socio"
   _description = "Socio de la cooperativa"
+  _rec_name = "nombre"
 
    # Restriccion SQL para que el DNI sea campo unico
   _sql_constraints = [
@@ -72,12 +73,15 @@ class socio(models.Model):
   personas_nucleo = fields.Integer(string="Nº de nucleo familiar ")
 
 
-#  cabanas = fields.One2many('coop1.cabana', 'propietario_id', string='Cabaña')
+  cabanas = fields.One2many('coop1.cabana', 'propietario_id', string='Cabaña')
 
 
 class cabana(models.Model):
   _name = "coop1.cabana"
   _description = "Cabaña del socio"
+  _rec_name = "nombre"
+  
+  nombre = fields.Char(string = "Nombre", required = True)
   
   comunidad = fields.Char(string = "Comunidad/Asociacion")
   
@@ -90,7 +94,7 @@ class cabana(models.Model):
 #  tipo_movilidad = fields.
   
   
-#  propietario_id = fields.Many2one('coop1.socio', string="Socio Propietario")
+  propietario_id = fields.Many2one('coop1.socio', string="Socio Propietario", required = True)
   
   
 class parcela(models.Model):

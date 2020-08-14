@@ -2,6 +2,7 @@
   <data>
   
   <!-- Vistas Tree -->
+
   <record model="ir.ui.view" id="socio_tree">
     <field name="name">Socios</field>
     <field name="model">coop1.socio</field>
@@ -20,15 +21,19 @@
     <field name="model">coop1.cabana</field>
     <field name="arch" type="xml">
       <tree>
+        <field name="nombre"/>
         <field name="comunidad"/>
         <field name="distrito_cab"/>
         <field name="provincia_cab"/>
         <field name="departamento_cab"/>
+        <field name="propietario_id"/>
       </tree>
     </field>
   </record>
 
   <!-- Vistas Form -->
+
+
   <record model="ir.ui.view" id="parcela_tree">
     <field name="name">Parcela</field>
     <field name="model">coop1.parcela</field>
@@ -71,19 +76,16 @@
               </group>
             </page>
             <page string="Rebaño/Cabaña">
-              <!--
               <field name="cabanas">
-                <tree>
+                <tree editable="bottom">
+                  <field name="nombre"/>
                   <field name="comunidad"/>
                   <field name="distrito_cab"/>
                   <field name="provincia_cab"/>
                   <field name="departamento_cab"/>
-                  
                    <field name="propietario_id" invisible="1"/> 
                 </tree>
-                
               </field>
-               -->
             </page>
           </notebook>
         </sheet>
@@ -100,11 +102,12 @@
         <sheet>
           <group>
             <group>
+              <field name="nombre"/>
               <field name="comunidad"/>
               <field name="distrito_cab"/>
               <field name="provincia_cab"/>
               <field name="departamento_cab"/>
-<!--              <field name="propietario_id"/> -->
+              <field name="propietario_id"/>
             </group>
           </group>
         </sheet>
