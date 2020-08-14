@@ -12,6 +12,8 @@
         <field name="dni"/>
         <field name="fecha_nac"/>
         <field name="edad"/>
+        <field name="num_cabanas"/>
+        <!-- <button name="get_data" string="Get Data" type="object" class="btn-primary"/> -->
       </tree>
     </field>
   </record>
@@ -63,6 +65,7 @@
               <field name="sexo"/>
               <field name="lugar_nacimiento"/>
               <field name="estado_civil"/>
+              <field name="num_cabanas"/>
             </group>
           </group>
           <notebook>

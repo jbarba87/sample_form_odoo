@@ -38,17 +38,29 @@ class socio(models.Model):
   @api.one
   @api.depends('fecha_nac')
   def calcula_edad(self):
-    print("hola")
     if self.fecha_nac is not False:
       today = datetime.today()
       nac = fields.Date.from_string(self.fecha_nac)
       self.edad = today.year - nac.year - ( (today.month, today.day) < (nac.month, nac.day) )
 
+  # Funcion de prueba que imprime cada cabaña con el nombre del socio
+  def get_data(self):
+    cab = self.env["coop1.socio"].search([])
+    for rec in cab:
+      print("cabanas: ", rec.nombre)
+    
+  # Funcion que cuenta la cantidad de cabañas del socio
+  @api.one
+  @api.depends('cabanas')
+  def count_cabanas(self):
+    if self.cabanas is not False:
+      self.num_cabanas = self.env["coop1.cabana"].search_count([('propietario_id', '=', self.id)])
+
   # Campos generales
   nombre = fields.Char(string="Nombre", required = True)
   dni = fields.Char(string="DNI", size = 8, required = True)
   fecha_nac = fields.Date( required = True)
-  edad = fields.Integer(string="Edad", compute="calcula_edad", store=True)
+
 
   sexo = fields.Selection([
     ('masculino', 'Masculino'),
@@ -66,6 +78,9 @@ class socio(models.Model):
     ('divorciado', 'Divorciado'),
   ], default="soltero", string="Estado Civil")
 
+  # Campos computados
+  num_cabanas = fields.Integer(string="Cantidad Cabañas", compute="count_cabanas", store=True)
+  edad = fields.Integer(string="Edad", compute="calcula_edad", store=True)
 
   #Domicilio
   dom_permanente = fields.Char(size=30)
