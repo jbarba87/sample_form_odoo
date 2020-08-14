@@ -1,6 +1,7 @@
 <odoo>
   <data>
   
+  <!-- Vistas Tree -->
   <record model="ir.ui.view" id="socio_tree">
     <field name="name">Socios</field>
     <field name="model">coop1.socio</field>
@@ -27,6 +28,7 @@
     </field>
   </record>
 
+  <!-- Vistas Form -->
   <record model="ir.ui.view" id="parcela_tree">
     <field name="name">Parcela</field>
     <field name="model">coop1.parcela</field>
@@ -69,6 +71,19 @@
               </group>
             </page>
             <page string="Rebaño/Cabaña">
+              <!--
+              <field name="cabanas">
+                <tree>
+                  <field name="comunidad"/>
+                  <field name="distrito_cab"/>
+                  <field name="provincia_cab"/>
+                  <field name="departamento_cab"/>
+                  
+                   <field name="propietario_id" invisible="1"/> 
+                </tree>
+                
+              </field>
+               -->
             </page>
           </notebook>
         </sheet>
@@ -89,6 +104,7 @@
               <field name="distrito_cab"/>
               <field name="provincia_cab"/>
               <field name="departamento_cab"/>
+<!--              <field name="propietario_id"/> -->
             </group>
           </group>
         </sheet>
@@ -96,63 +112,39 @@
     </field>
   </record>
 
+  <!-- Actions -->
+  
+  <record id="action_socio" model="ir.actions.act_window">
+    <field name="name">Socios</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">coop1.socio</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Agrege un socio.        
+      </p>
+    </field>
+  </record>
 
 
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="coop1.list">
-      <field name="name">coop1 list</field>
-      <field name="model">coop1.coop1</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
-    </record>
-    -->
+  <record id="action_cabana" model="ir.actions.act_window">
+    <field name="name">Cabaña</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">coop1.cabana</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Agrege una Cabaña.        
+      </p>
+    </field>
+  </record>
 
-    <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="coop1.action_window">
-      <field name="name">coop1 window</field>
-      <field name="res_model">coop1.coop1</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    -->
 
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="coop1.action_server">
-      <field name="name">coop1 server</field>
-      <field name="model_id" ref="model_coop1_coop1"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
-      </field>
-    </record>
-    -->
+  <menuitem id="coop_root" name="Coopecan" sequence="" />
+  <menuitem id="coop_socio" name="Socios" parent="coop_root" action="action_socio"/>
+  <menuitem id="coop_cabana" name="Cabaña" parent="coop_root" action="action_cabana"/>
 
-    <!-- Top menu item -->
-    <!--
-    <menuitem name="coop1" id="coop1.menu_root"/>
-    -->
-    <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="coop1.menu_1" parent="coop1.menu_root"/>
-    <menuitem name="Menu 2" id="coop1.menu_2" parent="coop1.menu_root"/>
-    -->
-    <!-- actions -->
-    <!--
-    <menuitem name="List" id="coop1.menu_1_list" parent="coop1.menu_1"
-              action="coop1.action_window"/>
-    <menuitem name="Server to list" id="coop1" parent="coop1.menu_2"
-              action="coop1.action_server"/>
-    -->
   </data>
 </odoo>

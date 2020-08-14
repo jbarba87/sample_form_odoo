@@ -20,7 +20,7 @@ class socio(models.Model):
     for rec in self:
       if len(rec.dni) < 8:
         raise ValidationError('El campo DNI debe tener 8 digitos.')
-      if  (not rec.dni.isnumeric()):
+      if (not rec.dni.isnumeric()):
         raise ValidationError('El campo DNI no debe contener letras.')
 
 
@@ -34,8 +34,10 @@ class socio(models.Model):
   # Funcion de autocompletado de la edad en base a la fecha de nacimiento
   # Ojo que la el campo odoo.fields.Date es string por lo que debe convertir en datetime
   # Tener en cuenta que se debe ingresar la fecha en formato mm/dd/aaaa
+  @api.one
   @api.depends('fecha_nac')
   def calcula_edad(self):
+    print("hola")
     if self.fecha_nac is not False:
       today = datetime.today()
       nac = fields.Date.from_string(self.fecha_nac)
@@ -45,7 +47,7 @@ class socio(models.Model):
   nombre = fields.Char(string="Nombre", required = True)
   dni = fields.Char(string="DNI", size = 8, required = True)
   fecha_nac = fields.Date( required = True)
-  edad = fields.Integer(string="Edad", compute="calcula_edad")
+  edad = fields.Integer(string="Edad", compute="calcula_edad", store=True)
 
   sexo = fields.Selection([
     ('masculino', 'Masculino'),
@@ -70,6 +72,8 @@ class socio(models.Model):
   personas_nucleo = fields.Integer(string="Nº de nucleo familiar ")
 
 
+#  cabanas = fields.One2many('coop1.cabana', 'propietario_id', string='Cabaña')
+
 
 class cabana(models.Model):
   _name = "coop1.cabana"
@@ -80,6 +84,13 @@ class cabana(models.Model):
   distrito_cab = fields.Char(string = "Distrito")
   provincia_cab = fields.Char(string = "Provincia")
   departamento_cab = fields.Char(string = "Departamento")
+  
+  via_acceso = fields.Char(string = "Via de acceso")
+  distancia_capital = fields.Integer(string = "Dist. desde capital Distrital (Kms)")
+#  tipo_movilidad = fields.
+  
+  
+#  propietario_id = fields.Many2one('coop1.socio', string="Socio Propietario")
   
   
 class parcela(models.Model):
