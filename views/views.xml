@@ -29,6 +29,7 @@
         <field name="provincia_cab"/>
         <field name="departamento_cab"/>
         <field name="socio_id"/>
+        <field name="num_parcelas"/>
       </tree>
     </field>
   </record>
@@ -43,7 +44,7 @@
       <tree>
         <field name="nombre_parcela"/>
         <field name="area"/>
-        <field name="num_potrero"/>
+        <field name="num_potreros"/>
       </tree>
     </field>
   </record>
@@ -199,6 +200,8 @@
               <field name="parcela_id"/>
               <field name="area"/>
               <field name="material"/>
+            </group>
+            <group>
               <field name="area_pasto_natural"/>
               <field name="area_bofedales"/>
               <field name="area_ereazeos"/>

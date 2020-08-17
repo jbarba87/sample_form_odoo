@@ -95,7 +95,15 @@ class cabana(models.Model):
   _name = "coop1.cabana"
   _description = "Cabaña del socio"
   _rec_name = "nombre"
-  
+
+
+  # Funcion que cuenta la cantidad de parcelas de la cabaña
+  @api.one
+  @api.depends('parcelas')
+  def count_parcelas(self):
+    if self.parcelas is not False:
+      self.num_parcelas = self.env["coop1.parcela"].search_count([('cabana_id', '=', self.id)])
+
   nombre = fields.Char(string = "Nombre", required = True)
   
   comunidad = fields.Char(string = "Comunidad/Asociacion")
@@ -108,7 +116,10 @@ class cabana(models.Model):
   distancia_capital = fields.Integer(string = "Dist. desde capital Distrital (Kms)")
   tipo_movilidad = fields.Char(string = "Tipo de movilidad")
   
+  # Campos computados
+  num_parcelas = fields.Integer(string="Cantidad parcelas", compute="count_parcelas", store=True)
   
+  # Campos relacionales
   socio_id = fields.Many2one('coop1.socio', string="Socio Propietario", required = True)
   
   parcelas = fields.One2many('coop1.parcela', 'cabana_id', string="Parcela")
@@ -119,8 +130,16 @@ class parcela(models.Model):
   _description = "Parcela de la cabaña"
   _rec_name = "nombre_parcela"
   
+  
+  # Funcion que cuenta la cantidad de potreros de la parcela
+  @api.one
+  @api.depends('potreros')
+  def count_potreros(self):
+    if self.potreros is not False:
+      self.num_potreros = self.env["coop1.potrero"].search_count([('parcela_id', '=', self.id)])
+  
   nombre_parcela = fields.Char(string="Nombre de la parcela", required = True)
-  num_potrero = fields.Integer(string = "Nº potreros")
+  num_potrero = fields.Integer(string = "Nº potreros")       # esto se debe eliminar
   area = fields.Float(string="Area")
     
   # condicion de tenencia de tierras (de la parcela)
@@ -130,6 +149,11 @@ class parcela(models.Model):
     ('comunero', 'Comunero'),
     ('otro', 'Otro'),
   ], default="posesionario", string="Condicion de tenencia de tierras")
+
+  # Campos computados
+  num_potreros = fields.Integer(string="Cantidad potreros", compute="count_potreros", store=True)
+  
+  # Campos relacionales
 
   cabana_id = fields.Many2one('coop1.cabana', string="Rebaño/Cabaña", required = True)
   
