@@ -54,7 +54,7 @@ class socio(models.Model):
   @api.depends('cabanas')
   def count_cabanas(self):
     if self.cabanas is not False:
-      self.num_cabanas = self.env["coop1.cabana"].search_count([('propietario_id', '=', self.id)])
+      self.num_cabanas = self.env["coop1.cabana"].search_count([('socio_id', '=', self.id)])
 
   # Campos generales
   nombre = fields.Char(string="Nombre", required = True)
@@ -88,7 +88,7 @@ class socio(models.Model):
   personas_nucleo = fields.Integer(string="Nº de nucleo familiar ")
 
 
-  cabanas = fields.One2many('coop1.cabana', 'propietario_id', string='Cabaña')
+  cabanas = fields.One2many('coop1.cabana', 'socio_id', string='Cabañas')
 
 
 class cabana(models.Model):
@@ -106,26 +106,87 @@ class cabana(models.Model):
   
   via_acceso = fields.Char(string = "Via de acceso")
   distancia_capital = fields.Integer(string = "Dist. desde capital Distrital (Kms)")
-#  tipo_movilidad = fields.
+  tipo_movilidad = fields.Char(string = "Tipo de movilidad")
   
   
-  propietario_id = fields.Many2one('coop1.socio', string="Socio Propietario", required = True)
+  socio_id = fields.Many2one('coop1.socio', string="Socio Propietario", required = True)
   
+  parcelas = fields.One2many('coop1.parcela', 'cabana_id', string="Parcela")
   
+
 class parcela(models.Model):
   _name = "coop1.parcela"
   _description = "Parcela de la cabaña"
+  _rec_name = "nombre_parcela"
   
+  nombre_parcela = fields.Char(string="Nombre de la parcela", required = True)
+  num_potrero = fields.Integer(string = "Nº potreros")
   area = fields.Float(string="Area")
-  num_potreros = fields.Integer(string = "Nº potreros")
+    
+  # condicion de tenencia de tierras (de la parcela)
+  cond_tenencia_tierras = fields.Selection([
+    ('posesionario', 'Posesionario'),
+    ('propietario', 'Propietario'),
+    ('comunero', 'Comunero'),
+    ('otro', 'Otro'),
+  ], default="posesionario", string="Condicion de tenencia de tierras")
+
+  cabana_id = fields.Many2one('coop1.cabana', string="Rebaño/Cabaña", required = True)
+  
+  potreros = fields.One2many('coop1.potrero', 'parcela_id', string="Potreros")
+
+class potrero(models.Model):
+  _name = "coop1.potrero"
+  _description = "Potrero"
+  _rec_name = "nombre_potrero"
+
+  nombre_potrero = fields.Char(string="Nombre del potrero", required = True)
+  area = fields.Float(string="Area del potrero")
+  material = fields.Char(string="Material del potrero")
+  area_pasto_natural = fields.Float(string="Area de pastos naturales")
+  
+  # Pasto cultivado
+  area_pasto_cultivado = fields.Float(string="Area de pastos cultivados")
+  tipo_pasto_cultivado = fields.Char(string="Tipo de pasto cultivado")
+  ahno_instalacion = fields.Integer(string="Año de instalacion")
+  riego_semana = fields.Integer(string="Nº riegos por semana")
+  tipo_riego = fields.Selection([
+    ('aspersion', 'Aspersion'),
+    ('graverdad', 'Gravedad'),
+    ('otros', 'otros'),
+  ], default="aspersion", string="Tipo de riego")
+
+  num_corte = fields.Integer(string="Nº corte o pastoreo/año")
   
   
+  #Rendimiento
+  peso_x_m2 = fields.Float(string="Peso por m2")
+  densidad = fields.Float(string="Densidad")
+  longitud = fields.Float(string="Longitud")
+  
+  # Fuente de agua
+  fuente_agua = fields.Selection([
+    ('manantial', 'Manantial/Ojo de agua'),
+    ('rio', 'Rio'),
+    ('subterraneo', 'Subterraneo'),
+    ('otros', 'otros'),
+  ], string="Fuente de agua")
+
+  
+  # Aforo de agua
+  aforo_agua = fields.Float("Aforo de agua")
+  epoca_lluvia = fields.Float("Epoca de lluvia L/s")
+  epoca_estiage = fields.Float("Epoca de estiage L/s")
+  
+  observaciones = fields.Text("Observaciones")  
   
   
+  area_bofedales = fields.Float("Area de bofedales totales")
+  area_ereazeos = fields.Float("Area de zonas ereazeos totales")
+  otros = fields.Float("Otros")     # Falta definir
   
   
-  
-  
+  parcela_id = fields.Many2one('coop1.parcela', string="Parcela", required=True)
   
   
   

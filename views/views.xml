@@ -28,12 +28,12 @@
         <field name="distrito_cab"/>
         <field name="provincia_cab"/>
         <field name="departamento_cab"/>
-        <field name="propietario_id"/>
+        <field name="socio_id"/>
       </tree>
     </field>
   </record>
 
-  <!-- Vistas Form -->
+
 
 
   <record model="ir.ui.view" id="parcela_tree">
@@ -41,20 +41,38 @@
     <field name="model">coop1.parcela</field>
     <field name="arch" type="xml">
       <tree>
+        <field name="nombre_parcela"/>
         <field name="area"/>
-        <field name="num_potreros"/>
+        <field name="num_potrero"/>
       </tree>
     </field>
   </record>
-  
-  
+
+
+
+  <record model="ir.ui.view" id="potrero_tree">
+    <field name="name">Parcela</field>
+    <field name="model">coop1.potrero</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="nombre_potrero"/>
+        <field name="area"/>
+        <field name="material"/>
+        <field name="area_pasto_natural"/>
+        <field name="area_pasto_cultivado"/>
+      </tree>
+    </field>
+  </record>
+
+
+  <!-- Vistas Form -->
   <record model="ir.ui.view" id="socio_form">
     <field name="name">Socios</field>
     <field name="model">coop1.socio</field>
     <field name="arch" type="xml">
       <form>
         <sheet>
-          <group>
+          <group string="Informacion Personal">
             <group>
               <field name="nombre"/>
               <field name="dni"/>
@@ -65,7 +83,6 @@
               <field name="sexo"/>
               <field name="lugar_nacimiento"/>
               <field name="estado_civil"/>
-              <field name="num_cabanas"/>
             </group>
           </group>
           <notebook>
@@ -79,16 +96,19 @@
               </group>
             </page>
             <page string="Rebaño/Cabaña">
-              <field name="cabanas">
-                <tree editable="bottom">
-                  <field name="nombre"/>
-                  <field name="comunidad"/>
-                  <field name="distrito_cab"/>
-                  <field name="provincia_cab"/>
-                  <field name="departamento_cab"/>
-                   <field name="propietario_id" invisible="1"/> 
-                </tree>
-              </field>
+              <group>
+                <field name="num_cabanas"/>
+                <field name="cabanas">
+                  <tree editable="bottom">
+                    <field name="nombre"/>
+                    <field name="comunidad"/>
+                    <field name="distrito_cab"/>
+                    <field name="provincia_cab"/>
+                    <field name="departamento_cab"/>
+                     <field name="socio_id" invisible="1"/> 
+                  </tree>
+                </field>
+              </group>
             </page>
           </notebook>
         </sheet>
@@ -110,13 +130,121 @@
               <field name="distrito_cab"/>
               <field name="provincia_cab"/>
               <field name="departamento_cab"/>
-              <field name="propietario_id"/>
+              <field name="socio_id"/>
             </group>
           </group>
+          <notebook>
+            <page string="Parcelas">
+              <field name="parcelas">
+                <tree editable="bottom">
+                  <field name="nombre_parcela"/>
+                  <field name="num_potrero"/>
+                  <field name="area"/>
+                  <field name="cond_tenencia_tierras"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
         </sheet>
       </form>
     </field>
   </record>
+
+
+
+  <record model="ir.ui.view" id="parcela_form">
+    <field name="name">Parcela</field>
+    <field name="model">coop1.parcela</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group string="Información general">
+            <group>
+              <field name="nombre_parcela"/>
+              <field name="area"/>
+              <field name="cond_tenencia_tierras"/>
+              <field name="cabana_id"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Potrero">
+              <field name="potreros">
+                <tree editable="bottom">
+                  <field name="nombre_potrero"/>
+                  <field name="area"/>
+                  <field name="material"/>
+                  <field name="area_pasto_natural"/>
+                  <field name="area_pasto_cultivado"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+
+
+
+  <record model="ir.ui.view" id="potrero_form">
+    <field name="name">Potrero</field>
+    <field name="model">coop1.potrero</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group string="Información general">
+            <group>
+              <field name="nombre_potrero"/>
+              <field name="parcela_id"/>
+              <field name="area"/>
+              <field name="material"/>
+              <field name="area_pasto_natural"/>
+              <field name="area_bofedales"/>
+              <field name="area_ereazeos"/>
+              <field name="otros"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Pasto cultivado">
+              <group>
+                <field name="area_pasto_cultivado"/>
+                <field name="tipo_pasto_cultivado"/>
+                <field name="ahno_instalacion"/>
+                <field name="riego_semana"/>
+                <field name="tipo_riego"/>
+                <field name="num_corte"/>
+              </group>
+
+            </page>
+            <page string="Rendimiento">
+              <group>
+                <field name="peso_x_m2"/>
+                <field name="densidad"/>
+                <field name="longitud"/>
+              </group>
+            </page>
+            <page string="Fuente de Agua">
+              <group>
+                <field name="fuente_agua"/>
+              </group>
+            </page>
+            <page string="Aforo de Agua">
+              <group>
+                <field name="aforo_agua"/>
+                <field name="epoca_lluvia"/>
+                <field name="epoca_estiage"/>
+              </group>
+            </page>
+            <page string="Observaciones">
+              <field name="observaciones"/>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
 
   <!-- Actions -->
   
@@ -147,10 +275,37 @@
     </field>
   </record>
 
+  <record id="action_parcela" model="ir.actions.act_window">
+    <field name="name">Parcela</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">coop1.parcela</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Agrege una Parcela.        
+      </p>
+    </field>
+  </record>
+
+  <record id="action_potrero" model="ir.actions.act_window">
+    <field name="name">Potrero</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">coop1.potrero</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Agrege una Potrero.        
+      </p>
+    </field>
+  </record>
 
   <menuitem id="coop_root" name="Coopecan" sequence="" />
   <menuitem id="coop_socio" name="Socios" parent="coop_root" action="action_socio"/>
   <menuitem id="coop_cabana" name="Cabaña" parent="coop_root" action="action_cabana"/>
+  <menuitem id="coop_parcela" name="Parcela" parent="coop_root" action="action_parcela"/>
+  <menuitem id="coop_potrero" name="Potrero" parent="coop_root" action="action_potrero"/>
 
   </data>
 </odoo>
