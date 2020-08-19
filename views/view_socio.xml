@@ -1,0 +1,87 @@
+<odoo>
+  <data>
+  
+
+  <record model="ir.ui.view" id="socio_tree">
+    <field name="name">Socios</field>
+    <field name="model">coop1.socio</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="nombre"/>
+        <field name="dni"/>
+        <field name="fecha_nac"/>
+        <field name="edad"/>
+        <field name="num_cabanas"/>
+        <!-- <button name="get_data" string="Get Data" type="object" class="btn-primary"/> -->
+      </tree>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="socio_form">
+    <field name="name">Socios</field>
+    <field name="model">coop1.socio</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group string="Informacion Personal">
+            <group>
+              <field name="nombre"/>
+              <field name="dni"/>
+              <field name="fecha_nac"/>
+              <field name="edad"/>
+            </group>
+            <group>
+              <field name="sexo"/>
+              <field name="lugar_nacimiento"/>
+              <field name="estado_civil"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Domicilio">
+              <group>
+                <group>
+                  <field name="dom_permanente"/>
+                  <field name="dom_transitorio"/>
+                  <field name="personas_nucleo"/>
+                </group>
+              </group>
+            </page>
+            <page string="Rebaño/Cabaña">
+              <group>
+                <field name="num_cabanas"/>
+                <field name="cabanas">
+                  <tree editable="bottom">
+                    <field name="nombre"/>
+                    <field name="comunidad"/>
+                    <field name="distrito_cab"/>
+                    <field name="provincia_cab"/>
+                    <field name="departamento_cab"/>
+                     <field name="socio_id" invisible="1"/> 
+                  </tree>
+                </field>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_socio" model="ir.actions.act_window">
+    <field name="name">Socios</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">coop1.socio</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Agrege un socio.        
+      </p>
+    </field>
+  </record>
+
+  <menuitem id="coop_root" name="Coopecan" sequence="" />
+  <menuitem id="coop_socio" name="Socios" parent="coop_root" action="action_socio"/>
+  
+  </data>
+</odoo>

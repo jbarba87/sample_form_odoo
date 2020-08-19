@@ -24,9 +24,13 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+         'security/ir.model.access.csv',
+#        'views/views.xml',
+#        'views/templates.xml',
+        'views/view_socio.xml',
+        'views/view_cabana.xml',
+        'views/view_parcela.xml',
+        'views/view_potrero.xml',        
     ],
     # only loaded in demonstration mode
     'demo': [
