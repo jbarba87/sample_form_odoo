@@ -7,6 +7,7 @@
     <field name="arch" type="xml">
       <tree>
         <field name="nombre_potrero"/>
+        <field name="nombre_socio"/>
         <field name="area"/>
         <field name="material"/>
         <field name="area_pasto_natural"/>
@@ -27,6 +28,7 @@
             <group>
               <field name="nombre_potrero"/>
               <field name="parcela_id"/>
+              <field name="nombre_socio"/>
               <field name="area"/>
               <field name="material"/>
             </group>
@@ -47,7 +49,6 @@
                 <field name="tipo_riego"/>
                 <field name="num_corte"/>
               </group>
-
             </page>
             <page string="Rendimiento">
               <group>

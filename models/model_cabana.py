@@ -19,6 +19,14 @@ class cabana(models.Model):
     if self.parcelas is not False:
       self.num_parcelas = self.env["coop1.parcela"].search_count([('cabana_id', '=', self.id)])
 
+  # Funcion que autocompleta el campo Socio, para saber el socio dueño de la cabana
+  @api.one
+  @api.depends('socio_id')
+  def get_socio(self):
+    if self.socio_id is not False:
+      socio = self.socio_id
+      self.nombre_socio = socio.nombre
+
   nombre = fields.Char(string = "Nombre", required = True)
   
   comunidad = fields.Char(string = "Comunidad/Asociacion")
@@ -39,4 +47,5 @@ class cabana(models.Model):
   
   parcelas = fields.One2many('coop1.parcela', 'cabana_id', string="Parcela")
   
-
+  # Obtencion del socio
+  nombre_socio = fields.Char(string="Socio", compute="get_socio")

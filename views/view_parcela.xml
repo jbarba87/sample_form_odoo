@@ -1,6 +1,21 @@
 <odoo>
   <data>
-  
+
+  <record model="ir.ui.view" id="parcela_tree">
+    <field name="name">Parcela</field>
+    <field name="model">coop1.parcela</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="nombre_parcela"/>
+        <field name="cabana_id"/>
+        <field name="nombre_socio"/>
+        <field name="area"/>
+        <field name="cond_tenencia_tierras"/>
+      </tree>
+    </field>
+  </record>
+
+
   <record model="ir.ui.view" id="parcela_form">
     <field name="name">Parcela</field>
     <field name="model">coop1.parcela</field>
@@ -10,9 +25,10 @@
           <group string="Información general">
             <group>
               <field name="nombre_parcela"/>
+              <field name="cabana_id"/>
+              <field name="nombre_socio"/>
               <field name="area"/>
               <field name="cond_tenencia_tierras"/>
-              <field name="cabana_id"/>
             </group>
           </group>
           <notebook>

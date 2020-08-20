@@ -17,6 +17,14 @@ class parcela(models.Model):
   def count_potreros(self):
     if self.potreros is not False:
       self.num_potreros = self.env["coop1.potrero"].search_count([('parcela_id', '=', self.id)])
+
+  # Funcion que autocompleta el campo Socio, para saber el socio dueño de la parcela
+  @api.one
+  @api.depends('cabana_id')
+  def get_socio(self):
+    if self.cabana_id is not False:
+      socio = self.cabana_id.socio_id
+      self.nombre_socio = socio.nombre
   
   nombre_parcela = fields.Char(string="Nombre de la parcela", required = True)
 #  num_potrero = fields.Integer(string = "Nº potreros")       # esto se debe eliminar
@@ -32,6 +40,7 @@ class parcela(models.Model):
 
   # Campos computados
   num_potreros = fields.Integer(string="Cantidad potreros", compute="count_potreros", store=True)
+  socio_id = fields.Char(string="Socio", compute="get_socio", store=True)
   
   # Campos relacionales
 
@@ -39,3 +48,6 @@ class parcela(models.Model):
   
   potreros = fields.One2many('coop1.potrero', 'parcela_id', string="Potreros")
 
+
+
+  nombre_socio = fields.Char(string="Socio", compute="get_socio")

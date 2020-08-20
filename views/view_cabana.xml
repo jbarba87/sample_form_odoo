@@ -27,11 +27,12 @@
           <group>
             <group>
               <field name="nombre"/>
+              <field name="socio_id"/>
+              <field name="nombre_socio"/>
               <field name="comunidad"/>
               <field name="distrito_cab"/>
               <field name="provincia_cab"/>
               <field name="departamento_cab"/>
-              <field name="socio_id"/>
             </group>
           </group>
           <notebook>

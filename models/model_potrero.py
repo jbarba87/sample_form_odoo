@@ -10,10 +10,24 @@ class potrero(models.Model):
   _description = "Potrero"
   _rec_name = "nombre_potrero"
 
+
+  # Funcion que autocompleta el campo Socio, para saber el socio dueño de la parcela
+  @api.one
+  @api.depends('parcela_id')
+  def get_socio(self):
+    if self.parcela_id is not False:
+      socio = self.parcela_id.cabana_id.socio_id
+      self.nombre_socio = socio.nombre
+      
+      
+      
+
   nombre_potrero = fields.Char(string="Nombre del potrero", required = True)
   area = fields.Float(string="Area del potrero")
   material = fields.Char(string="Material del potrero")
   area_pasto_natural = fields.Float(string="Area de pastos naturales")
+  
+  #socio = fields.Char(string="Socio", compute="get_socio", store=True)
   
   # Pasto cultivado
   area_pasto_cultivado = fields.Float(string="Area de pastos cultivados")
@@ -57,6 +71,9 @@ class potrero(models.Model):
   
   
   parcela_id = fields.Many2one('coop1.parcela', string="Parcela", required=True)
+  
+  # obtencion del socio
+  nombre_socio = fields.Char(string="Socio", compute="get_socio")
   
   
   
