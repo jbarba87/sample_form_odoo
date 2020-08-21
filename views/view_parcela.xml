@@ -63,7 +63,7 @@
     </field>
   </record>
 
-  <menuitem id="coop_parcela" name="Parcela" parent="coop_root" action="action_parcela"/>
+  <menuitem id="coop_parcela" name="Parcelas" parent="coop_root" action="action_parcela"/>
   
 
   </data>

@@ -65,7 +65,7 @@
     </field>
   </record>
 
-  <menuitem id="coop_cabana" name="Cabaña" parent="coop_root" action="action_cabana"/>
+  <menuitem id="coop_cabana" name="Cabañas" parent="coop_root" action="action_cabana"/>
 
   </data>
 </odoo>

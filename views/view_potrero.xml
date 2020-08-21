@@ -92,7 +92,7 @@
     </field>
   </record>
   
-  <menuitem id="coop_potrero" name="Potrero" parent="coop_root" action="action_potrero"/>
+  <menuitem id="coop_potrero" name="Potreros" parent="coop_root" action="action_potrero"/>
 
   </data>
 </odoo>

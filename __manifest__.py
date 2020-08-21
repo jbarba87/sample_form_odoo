@@ -31,6 +31,7 @@
         'views/view_cabana.xml',
         'views/view_parcela.xml',
         'views/view_potrero.xml',        
+        'views/view_camelido_andino.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
