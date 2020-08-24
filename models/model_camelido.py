@@ -15,7 +15,18 @@ class camelido_andino(models.Model):
       today = datetime.today()
       nac = fields.Date.from_string(self.fecha_nac)
       self.edad = today.year - nac.year - ( (today.month, today.day) < (nac.month, nac.day) )
-  
+
+
+
+  # Funcion que autocompleta el campo Socio, para saber el socio dueño de la parcela
+  @api.one
+  @api.depends('potrero_id')
+  def get_socio(self):
+    if self.potrero_id is not False:
+      socio = self.potrero_id.parcela_id.cabana_id.socio_id
+      self.nombre_socio = socio.nombre
+      
+
   nombre_camelido = fields.Char(string="Nombre", required=True)
   fecha_empadre = fields.Date(string="Fecha de empadre")
   fecha_nac = fields.Date(string="Fecha de naciomiento")
@@ -102,3 +113,6 @@ class camelido_andino(models.Model):
   # Campo potrero
   potrero_id = fields.Many2one('coop1.potrero', string="Potrero")
   
+  
+  # obtencion del socio
+  nombre_socio = fields.Char(string="Socio", compute="get_socio")

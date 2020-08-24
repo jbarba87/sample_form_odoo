@@ -72,6 +72,18 @@
             <page string="Observaciones">
               <field name="observaciones"/>
             </page>
+            <page string="Camelidos">
+              <field name="camelidos">
+                <tree editable="bottom">
+                  <field name="nombre_camelido"/>
+                  <field name="potrero_id"/>
+                  <field name="nombre_socio"/>
+                  <field name="fecha_empadre"/>
+                  <field name="fecha_nac"/>
+                  <field name="edad"/>
+                </tree>
+              </field>
+            </page>
           </notebook>
         </sheet>
       </form>
