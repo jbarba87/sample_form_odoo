@@ -1,6 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_coop1_socio,access.coop1.socio,model_coop1_socio,,1,0,0,0
-access_coop1_cabana,access.coop1.cabana,model_coop1_cabana,,1,0,0,0
-access_coop1_parcela,access.coop1.parcela,model_coop1_parcela,,1,0,0,0
-access_coop1_potrero,access.coop1.potrero,model_coop1_potrero,,1,0,0,0
-
+access_coop1_socio,access.coop1.socio,model_coop1_socio,,1,1,1,1
+access_coop1_cabana,access.coop1.cabana,model_coop1_cabana,,1,1,1,1
+access_coop1_parcela,access.coop1.parcela,model_coop1_parcela,,1,1,1,1
+access_coop1_potrero,access.coop1.potrero,model_coop1_potrero,,1,1,1,1
+access_coop1_camelido,access.coop1.camelido,model_coop1_camelido,,1,1,1,1
